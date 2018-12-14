@@ -1,0 +1,22 @@
+数据类型：json
+
+导入：mongoimport --db test2（数据库名） -c list（集合名） --type json F:\web-html5\mongodb\goodlist.json（路径）
+
+数据库名：xiu
+集合名：
+goodlist（商品列表）
+category（商品分类）
+brand（品牌分类）
+order（订单表）
+user（会员表）
+admin（管理员表）
+
+
+
+
+mongoimport --db xiu  -c goodlist  --type json  D:\json\goodlist.json
+mongoimport --db xiu  -c category --type json  D:\code three\project2\X-admin\lib\category.json
+mongoimport --db xiu  -c brand --type json  D:\code three\project2\X-admin\lib\brand.json
+mongoimport --db xiu  -c order --type json  D:\code three\project2\X-admin\lib\order.json
+mongoimport --db xiu  -c user --type json  D:\code three\project2\X-admin\lib\user.json
+mongoimport --db xiu  -c admin --type json  D:\code three\project2\X-admin\lib\admin.json
