@@ -1,0 +1,26 @@
+.layui-form-item .layui-input-block {
+    line-height:36px;
+    label{
+        margin-right:8px;
+        input{
+            display:inline-block;
+        }
+    }
+}
+
+
+#pagenum{
+    display:inline-block;
+    a{
+        margin-right:3px;
+    }
+    .current{
+        background: #009688;
+        color:#fff;
+    }
+}
+
+#role .layui-form-radio{
+    margin: 0;
+    padding-right: 0;
+}
