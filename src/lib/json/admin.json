@@ -1,0 +1,61 @@
+
+{
+"﻿id":1,
+"username":"Mary",
+"password":"123456",
+"role":"超级管理员",
+"email":"yes@163.com",
+"tel":"15280090085",
+"time":"11\/13\/2018 19:45:41",
+"status":"已启用"
+}
+{
+"﻿id":2,
+"username":"Bob",
+"password":"123456",
+"role":"编辑人员",
+"email":"haha@126.com",
+"tel":"16522800754",
+"time":"11\/13\/2018 19:45:55",
+"status":"已启用"
+}
+{
+"﻿id":3,
+"username":"Kate",
+"password":"123456",
+"role":"宣传人员",
+"email":"123@qq.com",
+"tel":"15280090088",
+"time":"11\/13\/2018 19:45:45",
+"status":"已启用"
+}
+{
+"﻿id":4,
+"username":"Lilly",
+"password":"666666",
+"role":"编辑人员",
+"email":"mary@123.com",
+"tel":"15280080007",
+"time":"11\/13\/2018 22:14:34",
+"status":"已启用"
+}
+{
+"﻿id":5,
+"username":"Yamy",
+"password":"123456",
+"role":"宣传人员",
+"email":"yamy@163.com",
+"tel":"15280070005",
+"time":"11\/13\/2018 22:15:20",
+"status":"已停用"
+}
+{
+"﻿id":6,
+"username":"Fate",
+"password":"123456",
+"role":"编辑人员",
+"email":"fate@163.com",
+"tel":"15280070005",
+"time":"11\/13\/2018 22:15:20",
+"status":"已启用"
+}
