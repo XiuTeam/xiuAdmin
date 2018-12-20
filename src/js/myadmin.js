@@ -9,7 +9,8 @@ let totalPage = 0
 // 发送ajax请求，渲染第一页
 $.ajax({
 	type: 'get',
-	url: '/admin/check',
+	url: 'http://localhost:3008/admin/check',
+	// url: '/admin/check',
 	async: true,
 	data: {
 		'qty': qty,
@@ -51,7 +52,7 @@ function create(arr) {
             <td class="td-status">
               <span class="layui-btn layui-btn-normal layui-btn-mini">${item.status}</span></td>
             <td class="td-manage">
-              <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
+              <a class="status" onclick="member_stop(this,'10001')" href="javascript:;"  title=${item.status}>
                 <i class="layui-icon">&#xe601;</i>
               </a>
               <a class="edit" title="编辑"  href="javascript:;">
@@ -66,11 +67,24 @@ function create(arr) {
 		return html;
 	}).join('');
 
-	return $('#adminList').html(res);
+	$('#adminList').html(res);
+	// console.log($('.status'));
+	for(var i = 0; i < $('.status').size(); i++) {
+		if($('.status').eq(i).prop('title') == '已启用') {
+			$('.status').eq(i).find('i').html('&#xe601;');
+			$('.status').eq(i).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+		} else {
+			console.log($('.status').eq(i).parents("tr").find(".td-status").find('span'));
+			$('.status').eq(i).find('i').html('&#xe62f;');
+
+			$('.status').eq(i).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+		}
+	}
+	$('#adminList').html($('#adminList').html());
 }
 
 // 更新页码状态
-function updatePage(){
+function updatePage() {
 	var pageBtn = $('#pagenum').find('a');
 	pageBtn.removeClass('current');
 	pageBtn.eq(now - 1).addClass('current');
@@ -81,7 +95,8 @@ function updatePage(){
 function require(qty, page) {
 	$.ajax({
 		type: 'get',
-		url: '/admin/check',
+		url: 'http://localhost:3008/admin/check',
+		// url: '/admin/check',
 		async: true,
 		data: {
 			'qty': qty,
@@ -138,7 +153,8 @@ $('#username').blur(() => {
 	if(str) {
 		$.ajax({
 			type: 'get',
-			url: '/addAdmin/checkname',
+			url: 'http://localhost:3008/addAdmin/checkname',
+			// url: '/addAdmin/checkname',
 			async: true,
 			data: {
 				'username': str
@@ -155,14 +171,14 @@ $('#username').blur(() => {
 			}
 		});
 	} else {
-		$('#userInfor').html('登录名不符合规则');
-		$('#userInfor').css('color', 'red');
+		// $('#userInfor').html('登录名不符合规则');
+		// $('#userInfor').css('color', 'red');
 		isok1 = false;
 	}
 });
 
-$('#role input').eq(0).prop('checked','checked');
-var role=$('#role input').eq(0).data('names');
+$('#role input').eq(0).prop('checked', 'checked');
+var role = $('#role input').eq(0).data('names');
 $('#role input').click(function() {
 	console.log($(this));
 	$(this).prop('checked', 'checked');
@@ -170,50 +186,52 @@ $('#role input').click(function() {
 });
 
 layui.use(['form', 'layer'], function() {
-    $ = layui.jquery;
-    var form = layui.form,
-        layer = layui.layer;
+	$ = layui.jquery;
+	var form = layui.form,
+		layer = layui.layer;
 
-    form.verify({
-	  username:[/^[a-zA-Z][\w\-]{2,19}$/,'登录名以字母开头，3-20位']
-	  ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-	  ,repass: function(value){
-	      if($('#L_pass').val()!=$('#L_repass').val()){
-	          return '两次密码不一致';
-	      }
-	  }
+	form.verify({
+		username: [/^[a-zA-Z][\w\-]{2,19}$/, '登录名以字母开头，3-20位'],
+		pass: [/(.+){6,12}$/, '密码必须6到12位'],
+		repass: function(value) {
+			if($('#L_pass').val() != $('#L_repass').val()) {
+				return '两次密码不一致';
+			}
+		}
 	});
 
-    // 监听提交
-    form.on('submit(add)', function() {
-        if (isok1) {
-            $.ajax({
-                type: 'post',
-                url: '/addAdmin/addname',
-                async: true,
-                data: {
-                    'username': $('#username').val(),
-                    'password': $('#L_pass').val(),
-                    'role': role,
-                    'tel': $('#phone').val(),
-                    'email': $('#L_email').val()
-                },
-                success: function(str) {
-                    console.log(str);
-                    layer.alert("增加成功", {
-				        icon: 6
-				    }, function() {
-				        // 获得frame索引
-				        var index = parent.layer.getFrameIndex(window.name);
-				        //关闭当前frame
-				        parent.layer.close(index);
-				    });
+	// 监听提交
+	form.on('submit(add)', function() {
+		if(isok1) {
+			$.ajax({
+				type: 'post',
+				url: 'http://localhost:3008/addAdmin/addname',
+				// url: '/addAdmin/addname',
+				async: true,
+				data: {
+					'username': $('#username').val(),
+					'password': $('#L_pass').val(),
+					'role': role,
+					'tel': $('#phone').val(),
+					'email': $('#L_email').val()
+				},
+				success: function(str) {
+					console.log(str);
+					layer.alert("增加成功", {
+						icon: 6
+					}, function() {
+						// 获得frame索引
+						var index = parent.layer.getFrameIndex(window.name);
+						window.parent.location.reload(); //刷新父页面
+						//关闭当前frame
+						parent.layer.close(index);
+					});
 				}
-            });
-        }else{
-        	return false
-        } 
-    });
+			});
+		} else {
+			return false
+		}
+	});
 });
 
 // 点击编辑按钮
@@ -227,7 +245,8 @@ $('#adminList').on('click', '.edit', function() {
 
 	$.ajax({
 		type: 'get',
-		url: '/addAdmin/checkid',
+		url: 'http://localhost:3008/addAdmin/checkid',
+		// url: '/addAdmin/checkid',
 		async: true,
 		data: {
 			'_id': _id
@@ -253,4 +272,38 @@ $('#adminList').on('click', '.edit', function() {
 			Cookie.set('data', cookiestr, {});
 		}
 	});
+})
+
+// 点击查询，查找管理员
+$('#search').click((ev) => {
+	ev.preventDefault();
+	var valName = $.trim($('.valName').val());
+	console.log(valName);
+	if(valName) {
+		$.ajax({
+			type: 'get',
+			url: 'http://localhost:3008/addAdmin/checkname',
+			// url: '/addAdmin/checkname',
+			async: true,
+			data: {
+				'username': valName
+			},
+			success: function(str) {
+				console.log(str);
+				if(str.code == 1) {
+					var arr = [];
+					arr.push(str.data);
+					create(arr);
+					$('.page').html('');
+					$('.totalPage').html(`共有数据：${arr.length} 条`);
+				} else {
+					layer.confirm('没有相关数据呢', {
+						icon: 1
+					}, function() {
+						window.location.reload();
+					});
+				}
+			}
+		});
+	}
 })

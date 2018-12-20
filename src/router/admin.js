@@ -26,7 +26,7 @@ Router.route('/:id')
 				total = result.length;
 			});
 
-			admin.find().limit(qty * 1).skip(page * 1).toArray((error, result) => {
+			admin.find().sort({time:-1}).limit(qty * 1).skip(page * 1).toArray((error, result) => {
 
 				if(result) {
 					data = {
@@ -45,59 +45,7 @@ Router.route('/:id')
 				}
 				res.send(data);
 			});
-
-			// admin.find().toArray((error,result)=>{
-			//     total=result.length;
-
-			//     if(result){
-			//         data={
-			//             code:1,
-			//             total:total,
-			//             data:result,
-			//             msg:'ok'
-			//         }
-			//     }else{
-			//         data={
-			//             code:0,
-			//             total:0,
-			//             data:error,
-			//             msg:'sorry'
-			//         }
-			//     }
-			//     res.send(data);
-			// });
 		});
 	})
-
-// 点击添加按钮，添加管理员  
-
-// Router.get('/:checkAdmin',(req,res)=>{
-//     MongoClient.connect('mongodb://127.0.0.1:27017',(error,database)=>{
-//         if(error){
-//             throw error;
-//         }
-
-//         let db=database.db('xiu');
-//         let admin=db.collection('admin');
-//         admin.find().toArray((error,result)=>{
-//             let data;
-//             if(result){
-//                 data={
-//                     code:1,
-//                     data:result,
-//                     msg:'ok'
-//                 }
-//             }else{
-//                 data={
-//                     code:0,
-//                     data:error,
-//                     msg:'sorry'
-//                 }
-//             }
-//             res.send(data);
-//             console.log(data);
-//         });
-//     });
-// });
 
 module.exports = Router;

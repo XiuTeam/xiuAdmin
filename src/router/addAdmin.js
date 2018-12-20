@@ -229,4 +229,49 @@ Router.post('/update', urlencodedParser, (req, res) => {
 	});
 });
 
+// 更新管理员状态
+Router.get('/updateStatus', (req, res) => {
+	// 获取新注册用户信息
+	let {
+		status,
+		_id
+	} = req.query;
+	// 连接数据库
+	MongoClient.connect('mongodb://127.0.0.1:27017', (error, database) => {
+		if(error) {
+			throw error;
+		}
+		// 打开数据库，找到集合
+		let db = database.db('xiu');
+		let admin = db.collection('admin');
+
+		// 插入新数据
+		admin.update({
+			_id: new ObjectID(_id)
+		}, {
+			$set: {
+				status: status
+			}
+		}, (error, result) => {
+			let data;
+			if(error) {
+				data = {
+					code: 0,
+					data: [],
+					msg: error
+				}
+			} else {
+				data = {
+					code: 1,
+					data: result,
+					msg: 'success'
+				}
+			}
+			res.send(data);
+		});
+
+		database.close();
+	});
+});
+
 module.exports = Router;

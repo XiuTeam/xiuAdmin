@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/xadmin.css">
+    <link rel="stylesheet" href="../css/good.css">
+  
+  </head>
+  
+  <body>
+    <div class="x-body">
+        <form class="layui-form" id="upImg">
+              <div class="layui-form-item">
+              <label class="layui-form-label">商品名称</label>
+              <div class="layui-input-block">
+                <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" id="title">
+              </div>
+          </div>
+          <!-- <div class="layui-form-item">
+              <label for="goodname" class="layui-form-label">
+                  <span class="x-red">*</span>商品名称
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="goodname" name="goodname" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div> -->
+          <!-- <div class="layui-form-item">
+              <label for="category" class="layui-form-label">
+                  <span class="x-red">*</span>商品类别
+              </label>
+              <div class="layui-input-inline">
+                  <select id="category" name="contrller">
+                    <option>请选择分类</option>
+                    <option value="包袋">包袋</option>
+                    <option value="服饰">服饰</option>
+                    <option value="鞋靴">鞋靴</option>
+                    <option value="腕表">腕表</option>
+                    <option value="配饰">配饰</option>
+                    <option value="妆品">妆品</option>
+                    <option value="生活">生活</option>
+                    <option value="婴童">婴童</option>
+                  </select>
+              </div>
+          </div> -->
+          <div class="layui-form-item">
+              <label for="price" class="layui-form-label">
+                  <!-- <span class="x-red">*</span> -->现价
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="price" name="price" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+
+              <label for="original" class="layui-form-label original">
+                  <!-- <span class="x-red">*</span> -->原价
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="original" name="original" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="category" class="layui-form-label">
+                  <!-- <span class="x-red">*</span> -->商品类别
+              </label>
+              <div class="layui-input-inline">
+                  <select id="category" name="contrller">
+                    <!-- <option>请选择分类</option> -->
+                    <option value="包袋">包袋</option>
+                    <option value="服饰">服饰</option>
+                    <option value="鞋靴">鞋靴</option>
+                    <option value="腕表">腕表</option>
+                    <option value="配饰">配饰</option>
+                    <option value="妆品">妆品</option>
+                    <option value="生活">生活</option>
+                    <option value="婴童">婴童</option>
+                  </select>
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="goodNum" class="layui-form-label">
+                  <!-- <span class="x-red">*</span> -->库存
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="goodNum" name="goodNum" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          
+          <div id="imgBox" class="layui-form-item layui-form-text">
+              <label for="desc" class="layui-form-label">
+                  商品图片
+              </label>
+
+              <!-- <input type="file" name="goodspic" id="goodspic" multiple /> -->
+
+              <div class="layui-upload">
+              <button type="button" class="layui-btn" id="test2">图片上传</button> 
+              <blockquote class="layui-elem-quote layui-quote-nm" >
+                预览图：
+                <div class="layui-upload-list" id="demo2"></div>
+             </blockquote>
+            </div>
+              
+              <!-- <button type="button" name="goodspic" class="layui-btn" id="test1">
+                <i class="layui-icon">&#xe67c;</i>上传图片
+              </button> -->
+              <!-- <div id="u912" class="ax_default image">
+                <img id="u912_img" class="img " src="../images/b1%20%281%29.jpg">
+                
+                <label><input type="radio" name="choose" data-mark="1">设为封面</label>
+            </div>
+            <div id="u912" class="ax_default image">
+                <img id="u912_img" class="img " src="../images/b1%20%281%29.jpg">
+                
+                <label><input type="radio" name="choose" data-mark="1">设为封面</label>
+            </div> -->
+          </div>
+          <div class="layui-form-item" id="activity">
+          <label class="layui-form-label">促销活动</label>
+          <div class="layui-input-block">
+            <label><input type="radio" name="like" data-names="限时九折">限时九折</label>
+            <label><input type="radio" name="like" data-names="参加满减">参加满减</label>
+            <label><input type="radio" name="like" data-names="秒杀价">秒杀价</label>
+            <label><input type="radio" name="like" data-names="一口价">一口价</label>
+            <label><input type="radio" name="like" data-names="无">无</label>
+            <!-- <input type="radio" name="like[write]" title="限时九折">
+            <input type="radio" name="like[read]" title="参加满减" >
+            <input type="radio" name="like[dai]" title="秒杀价">
+            <input type="radio" name="like[dai]" title="一口价">
+            <input type="radio" name="like[dai]" title="无"> -->
+          </div>
+        </div>
+        <div class="layui-form-item" id="status">
+          <label class="layui-form-label">上架</label>
+          <div class="layui-input-block">
+            <input type="checkbox" name="switch" lay-skin="switch">
+          </div>
+        </div>
+          <div class="layui-form-item layui-form-text">
+              <label for="desc" class="layui-form-label">
+                  描述
+              </label>
+              <div class="layui-input-block">
+                  <textarea placeholder="请输入内容" id="desc" name="desc" class="layui-textarea"></textarea>
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_repass" class="layui-form-label">
+              </label>
+              <!-- <button  class="layui-btn" lay-filter="add" lay-submit="">
+                  添加
+              </button> -->
+              <input type="button" class="layui-btn" id="addBtn" lay-filter="add" lay-submit="" value="添加">
+          </div>
+      </form>
+    </div>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
+    <script type="text/javascript" src="../js/goodlist.js"></script>
+    <script>
+
+       // (()=>{
+            /*
+                FormData
+                    * 实例化一个ForData: new FormData()
+                    * 方法
+                        * append(name,value) 往FormData实例中添加信息
+
+            */
+
+         layui.use('upload', function(){
+          var $ = layui.jquery
+          ,upload = layui.upload;
+          
+          
+          //多图片上传
+          upload.render({
+            elem: '#test2'
+            ,url: '/upload'
+            ,multiple: true
+            ,before: function(obj){
+              //预读本地文件示例，不支持ie8
+              obj.preview(function(index, file, result){
+                $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+              });
+            }
+            ,done: function(res){
+              //上传完毕
+            }
+          });
+          
+        });
+
+        // layui.use(['form','layer'], function(){
+        //     $ = layui.jquery;
+        //   var form = layui.form
+        //   ,layer = layui.layer;
+        //   //监听提交
+        //   form.on('submit(add)', function(data){
+        //     console.log(data);
+        //     //发异步，把数据提交给php
+        //     layer.alert("添加成功", {icon: 6},function () {
+        //         // 获得frame索引
+        //         var index = parent.layer.getFrameIndex(window.name);
+        //         //关闭当前frame
+        //         parent.layer.close(index);
+        //     });
+        //     return false;
+        //   });
+          
+          
+        // }); 
+    </script>
+    <!-- <script>var _hmt = _hmt || []; (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+      </script> -->
+  </body>
+
+</html>
