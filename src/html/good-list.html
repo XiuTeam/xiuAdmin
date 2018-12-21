@@ -29,7 +29,7 @@
 				<form class="layui-form layui-col-md12 x-so">
 					<!--    <input class="layui-input" placeholder="开始日" name="start" id="start">
           <input class="layui-input" placeholder="截止日" name="end" id="end"> -->
-					<div class="layui-input-inline">
+					<!-- <div class="layui-input-inline">
 						<select name="contrller">
 							<option>请选择分类</option>
 							<option>包袋</option>
@@ -42,10 +42,10 @@
 							<option>婴童</option>
 
 						</select>
-					</div>
+					</div> -->
 
-					<input type="text" name="username" placeholder="请输入标题" autocomplete="off" class="layui-input">
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+					<input type="text" name="username" placeholder="请输入商品编号" autocomplete="off" class="layui-input" id="goodid">
+					<button id="search" class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
 				</form>
 			</div>
 			<xblock>
@@ -61,14 +61,20 @@
 						</th>
 						<th style="width:100px;">ID</th>
 						<th>商品名称</th>
-						<th data-field="category" data-key="4-0-2" class=" layui-unselect"><div class="layui-table-cell laytable-cell-4-0-2"><span>分类</span><span class="layui-table-sort layui-inline" lay-sort="asc"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th>
+						<th data-field="category" data-key="4-0-2" class=" layui-unselect">
+							<div class="layui-table-cell laytable-cell-4-0-2"><span>分类</span><span class="layui-table-sort layui-inline" lay-sort="asc"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div>
+						</th>
 						<!-- <th data-field="price" data-key="4-0-2" class=" layui-unselect"><div class="layui-table-cell laytable-cell-4-0-2"><span>原价</span><span class="layui-table-sort layui-inline" lay-sort="asc"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th> -->
 						<!-- <th>分类</th> -->
 						<th>原价</th>
-						<th data-field="price" data-key="4-0-2" class=" layui-unselect"><div class="layui-table-cell laytable-cell-4-0-2"><span>现价</span><span class="layui-table-sort layui-inline" lay-sort="asc"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th>
+						<th data-field="price" data-key="4-0-2" class=" layui-unselect">
+							<div class="layui-table-cell laytable-cell-4-0-2"><span>现价</span><span class="layui-table-sort layui-inline" lay-sort="asc"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div>
+						</th>
 						<!-- <th>现价</th> -->
 						<th>库存</th>
-						<th data-field="time" data-key="4-0-2" class=" layui-unselect"><div class="layui-table-cell laytable-cell-4-0-2"><span>添加时间</span><span class="layui-table-sort layui-inline" lay-sort="asc"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th>
+						<th data-field="time" data-key="4-0-2" class=" layui-unselect">
+							<div class="layui-table-cell laytable-cell-4-0-2"><span>添加时间</span><span class="layui-table-sort layui-inline" lay-sort="asc"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div>
+						</th>
 						<!-- <th>添加时间</th> -->
 						<th>状态</th>
 						<!-- <th>配送方式</th>
@@ -229,15 +235,11 @@
 
 			// console.log( $('#goodList .good_pick'));
 			$('#goodList').on('click', '.good_pick', function() {
-//				console.log($(this) + '123');
-				//				for(var i = 0; i < $('.good_pick').length; i++) {
 				if(!$(this).hasClass('layui-form-checked')) {
 					$(this).addClass('layui-form-checked');
-//					console.log($(this));
 				} else {
 					$(this).removeClass('layui-form-checked');
 				}
-				//				}
 
 			})
 
@@ -269,15 +271,7 @@
 				});
 			}
 		</script>
-		<!--<script>
-			var _hmt = _hmt || [];
-			(function() {
-				var hm = document.createElement("script");
-				hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-				var s = document.getElementsByTagName("script")[0];
-				s.parentNode.insertBefore(hm, s);
-			})();
-		</script>-->
+		
 	</body>
 
 </html>

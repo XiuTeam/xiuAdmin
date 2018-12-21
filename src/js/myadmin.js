@@ -33,9 +33,6 @@ $.ajax({
 });
 
 // 渲染管理员列表
-// <input type="checkbox" name="pick" class="pick">
-//  // <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-//  onclick="x_admin_show('编辑','admin-edit.html')"
 function create(arr) {
 	var res = arr.map((item) => {
 		var html = `<tr data-id=${item._id}>

@@ -28,8 +28,6 @@
 		<div class="x-body">
 			<div class="layui-row">
 				<form class="layui-form layui-col-md12 x-so">
-					<!-- <input class="layui-input" placeholder="开始日" name="start" id="start">
-          <input class="layui-input" placeholder="截止日" name="end" id="end"> -->
 					<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input valName">
 					<button id="search" class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
 				</form>
@@ -122,27 +120,6 @@
 				});
 			});
 
-			// $('#home').click(function(){
-			//   if($('.layui-tab-title .home')){
-			//       alert('yes');
-			//   }
-
-			//   console.log($('.layui-tab-title .home'));
-			//     $('.layui-tab-title .home').addClass('layui-this');
-			//     $('.layui-tab-title .home').next().removeClass('layui-this');
-			// })
-
-			// for(var i=0;i<$('.status').size();i++){
-			//     if($('.status').eq(i).title=='已启用'){
-			//         $('.status').eq(i).find('i').html('&#xe601;');
-			//         $('.status').eq(i).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-			//     }else{
-			//         $('.status').eq(i).find('i').html('&#xe62f;');
-
-			//         $('.status').eq(i).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-			//     }
-			// }
-
 			/*用户-停用*/
 			function member_stop(obj, id) {
 				var _id = $(obj).parent().parent().data('id');
@@ -232,14 +209,12 @@
 
 			$('#adminList').on('click', '.pick', function() {
 				console.log($(this));
-				//				for(var i = 0; i < $('.pick').size(); i++) {
 				if(!$(this).hasClass('layui-form-checked')) {
 					$(this).addClass('layui-form-checked');
 					console.log($(this));
 				} else {
 					$(this).removeClass('layui-form-checked');
 				}
-				//				}
 
 			})
 
@@ -279,7 +254,6 @@
 					$(".layui-form-checked").not('.header').parents('tr').remove();
 				});
 			}
-			// });
 		</script>
 
 	</body>

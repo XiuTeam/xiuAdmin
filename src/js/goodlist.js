@@ -10,7 +10,7 @@ let totalPage = 0
 $.ajax({
 	type: 'get',
 	url: 'http://localhost:3008/good/check',
-    // url: '/good/check',
+	// url: '/good/check',
 	async: true,
 	data: {
 		'qty': qty,
@@ -65,9 +65,9 @@ function create(arr) {
 
 		return html;
 	}).join('');
-	
+
 	$('#goodList').html(res);
-    // console.log($('.good_status'));
+	// console.log($('.good_status'));
 	for(var i = 0; i < $('.good_status').length; i++) {
 		if($('.good_status').eq(i).prop('title') == '已上架') {
 			$('.good_status').eq(i).find('i').html('&#xe601;');
@@ -94,7 +94,7 @@ function require(qty, page) {
 	$.ajax({
 		type: 'get',
 		url: 'http://localhost:3008/good/check',
-        // url: '/good/check',
+		// url: '/good/check',
 		async: true,
 		data: {
 			'qty': qty,
@@ -142,87 +142,78 @@ $('#next').on('click', function() {
 	require(qty, page);
 });
 
+// 点击编辑
+let datalist;
 
-var activity='';
-var status='';
-var url='';
-var category='';
+$('#goodList').on('click', '.edit', function() {
+	x_admin_show('编辑', 'good-edit.html');
 
-// 判断商品活动
-$('#activity input').eq(0).prop('checked', 'checked');
-// console.log($('#activity input').eq(0).prop('checked'));
-activity = $('#activity input').eq(0).data('names');
-// console.log(activity);
-$('#activity input').click(function() {
-    console.log($(this));
-    $(this).prop('checked', 'checked');
-    activity = $(this).data('names');
-    // console.log(activity);
-});
+	var _id = $(this).parent().parent().data('id');
 
-// 判断商品状态
-$('#status input').prop('checked','checked');
-// var ischeck=true;
-if($('#status input').prop('checked')){
-    status='上架';
-}else{
-    status='下架';
-}
-// $('#status').on.('click','.layui-unselect',function() {
-//     console.log($(this));
-//     $(this).prop('checked', 'checked');
-//     activity = $(this).data('names');
-//     // console.log(activity);
-// });
+	$.ajax({
+		type: 'get',
+		url: 'http://localhost:3008/good/checkid',
+		// url: '/addAdmin/checkid',
+		async: true,
+		data: {
+			'_id': _id
+		},
+		success: function(str) {
+			console.log(str);
+			var data = str.data;
+			console.log(data);
+			// x_admin_show('','./admin-list.html');
 
-// 判断商品类别
-// category=$('#category').val();
-// console.log(category);
+			datalist = {
+				'name': data.name,
+				'price': data.price,
+				'original': data.original,
+				'category': data.category,
+				'total': data.total,
+				'desc': data.desc,
+				'activity': data.activity,
+				'status': data.status,
+				'upImgUrl': data.upImgUrl,
+				'_id': _id
+			}
 
-// layui-unselect layui-form-switch layui-form-onswitch
-// 点击添加商品
-layui.use(['form', 'layer'], function() {
-    $ = layui.jquery;
-    var form = layui.form,
-        layer = layui.layer;
-        var isok1=true;
+			var cookiestr = JSON.stringify(datalist);
+			console.log(cookiestr);
+			Cookie.set('data', cookiestr, {});
+		}
+	});
+})
 
-
-
-    // 监听提交
-    form.on('submit(add)', function() {
-        if(isok1) {
-            $.ajax({
-                type: 'post',
-                url: 'http://localhost:3008/good/addgood',
-                // url: '/addAdmin/addname',
-                async: true,
-                data: {
-                    'name': $('#title').val(),
-                    'price': $('#price').val(),
-                    'original': $('#original'),
-                    'category': $('#category').val(),
-                    'total':$('#goodNum').val(),
-                    'activity':activity,
-                    'desc':$('#desc').val(),
-                    'status':status
-                },
-                success: function(str) {
-                    console.log(str);
-                    // layer.alert("添加成功", {
-                    //     icon: 6
-                    // }, function() {
-                    //     // 获得frame索引
-                    //     var index = parent.layer.getFrameIndex(window.name);
-                    //     window.parent.location.reload(); //刷新父页面
-                    //     //关闭当前frame
-                    //     parent.layer.close(index);
-                    // });
-                }
-            });
-        } else {
-            return false
-        }
-    });
-
-});
+// 点击按id查找商品
+$('#search').click((ev) => {
+	ev.preventDefault();
+	var goodid = $.trim($('#goodid').val());
+	console.log(goodid);
+	if(goodid) {
+		$.ajax({
+			type: 'get',
+			url: 'http://localhost:3008/good/checkgood',
+			// url: '/addAdmin/checkname',
+			async: true,
+			data: {
+				'_id': goodid
+			},
+			success: function(str) {
+				console.log(str);
+				if(str.code == 1) {
+					var arr = [];
+					arr.push(str.data);
+					create(arr);
+					$('.page').html('');
+					$('.totalPage').html(`共有数据：${arr.length} 条`);
+				} else {
+					layer.confirm('没有相关数据呢', {
+						icon: 1
+					}, function() {
+						window.location.reload();
+					});
+				}
+			}
+		});
+	}
+})
