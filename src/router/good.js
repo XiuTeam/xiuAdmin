@@ -11,7 +11,7 @@ Router.get('/check', (req, res) => {
 		qty,
 		page
 	} = req.query;
-	// 查询管理员列表，渲染页面
+	// 查询商品列表，渲染页面
 	MongoClient.connect('mongodb://127.0.0.1:27017', (error, database) => {
 		if(error) {
 			throw error;

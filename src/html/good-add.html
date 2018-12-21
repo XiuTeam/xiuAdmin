@@ -149,7 +149,7 @@
 						// var obj=JSON.parse(res);
 						// console.log(obj);
 						imgData = res.data;
-						upImgUrl = imgData[0].path;
+						upImgUrl = imgData[0].path+'&'+upImgUrl;
 						console.log(upImgUrl);
 					}
 				});
