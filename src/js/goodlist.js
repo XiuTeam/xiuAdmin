@@ -149,39 +149,7 @@ $('#goodList').on('click', '.edit', function() {
 	x_admin_show('编辑', 'good-edit.html');
 
 	var _id = $(this).parent().parent().data('id');
-
-	$.ajax({
-		type: 'get',
-		url: 'http://localhost:3008/good/checkid',
-		// url: '/addAdmin/checkid',
-		async: true,
-		data: {
-			'_id': _id
-		},
-		success: function(str) {
-			console.log(str);
-			var data = str.data;
-			console.log(data);
-			// x_admin_show('','./admin-list.html');
-
-			datalist = {
-				'name': data.name,
-				'price': data.price,
-				'original': data.original,
-				'category': data.category,
-				'total': data.total,
-				'desc': data.desc,
-				'activity': data.activity,
-				'status': data.status,
-				'upImgUrl': data.upImgUrl,
-				'_id': _id
-			}
-
-			var cookiestr = JSON.stringify(datalist);
-			console.log(cookiestr);
-			Cookie.set('data', cookiestr, {});
-		}
-	});
+	Cookie.set('_id', _id, {});
 })
 
 // 点击按id查找商品

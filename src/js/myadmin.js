@@ -232,43 +232,13 @@ layui.use(['form', 'layer'], function() {
 });
 
 // 点击编辑按钮
-// <a class="edit" title="编辑"  onclick="x_admin_show('编辑','admin-edit.html')" href="javascript:;">
 let datalist;
 
 $('#adminList').on('click', '.edit', function() {
 	x_admin_show('编辑', 'admin-edit.html');
 
 	var _id = $(this).parent().parent().data('id');
-
-	$.ajax({
-		type: 'get',
-		url: 'http://localhost:3008/addAdmin/checkid',
-		// url: '/addAdmin/checkid',
-		async: true,
-		data: {
-			'_id': _id
-		},
-		success: function(str) {
-			console.log(str);
-			var data = str.data;
-			console.log(data);
-			// x_admin_show('','./admin-list.html');
-
-			datalist = {
-				'username': data.username,
-				'tel': data.tel,
-				'email': data.email,
-				'password': data.password,
-				'status': data.status,
-				'_id': data._id,
-				'role': data.role
-			}
-
-			var cookiestr = JSON.stringify(datalist);
-			console.log(cookiestr);
-			Cookie.set('data', cookiestr, {});
-		}
-	});
+	Cookie.set('_id', _id, {});
 })
 
 // 点击查询，查找管理员
