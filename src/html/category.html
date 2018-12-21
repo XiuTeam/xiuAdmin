@@ -12,6 +12,9 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="format-detection" content="telephone=no">
         <link rel="stylesheet" href="../css/x-admin.css" media="all">
+         <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
     </head>
     <body>
         <div class="x-nav">
@@ -96,14 +99,13 @@
                 </tbody>
             </table>
         </div>
-        <script src="lib/layui/layui.js" charset="utf-8"></script>
-        <script src="js/x-layui.js" charset="utf-8"></script>
+
         <script>
             layui.use(['element','layer','form'], function(){
-                $ = layui.jquery;//jquery
-              lement = layui.element();//面包导航
+                $ = layui.jquery;//jquer
+              lement = layui.element;//面包导航
               layer = layui.layer;//弹出层
-              form = layui.form();
+              form = layui.form;
 
               //监听提交
               form.on('submit(add)', function(data){
@@ -116,9 +118,6 @@
 
 
             })
-
-
-
               
             //批量删除提交
              function delAll () {
@@ -142,14 +141,6 @@
                 });
             }
             </script>
-            <script>
-        var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-          var s = document.getElementsByTagName("script")[0]; 
-          s.parentNode.insertBefore(hm, s);
-        })();
-        </script>
+            
     </body>
 </html>

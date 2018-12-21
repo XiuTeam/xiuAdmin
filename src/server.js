@@ -4,7 +4,7 @@ const {
 	host,
 	root
 } = require('./config.json');
-const Router = require('./router/index.js');
+const Router = require('./router');
 
 let app = express();
 app.use(express.static(root));

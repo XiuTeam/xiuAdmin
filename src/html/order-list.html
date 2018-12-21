@@ -13,6 +13,10 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/xadmin.js"></script>
+<<<<<<< HEAD
+=======
+     <script type="text/javascript" src="../js/orderlist.js"></script>
+>>>>>>> xiuBranch
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -36,7 +40,11 @@
         <form class="layui-form layui-col-md12 x-so">
           <input class="layui-input" placeholder="开始日" name="start" id="start">
           <input class="layui-input" placeholder="截止日" name="end" id="end">
+<<<<<<< HEAD
           <div class="layui-input-inline">
+=======
+         <!--  <div class="layui-input-inline">
+>>>>>>> xiuBranch
             <select name="contrller">
               <option>支付状态</option>
               <option>已支付</option>
@@ -61,9 +69,15 @@
               <option value="4">已完成</option>
               <option value="5">已作废</option>
             </select>
+<<<<<<< HEAD
           </div>
           <input type="text" name="username"  placeholder="请输入订单号" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+=======
+          </div> -->
+          <input type="text" name="username"  placeholder="请输入订单号" autocomplete="off" class="layui-input  ordernumber">
+          <button class="layui-btn searchbtn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+>>>>>>> xiuBranch
         </form>
       </div>
       <xblock>
@@ -90,8 +104,13 @@
             <th >操作</th>
             </tr>
         </thead>
+<<<<<<< HEAD
         <tbody>
           <tr>
+=======
+        <tbody class="layui-tbody">
+         <!--  <tr>
+>>>>>>> xiuBranch
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
@@ -113,6 +132,7 @@
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
+<<<<<<< HEAD
           </tr>
         </tbody>
       </table>
@@ -124,6 +144,20 @@
           <a class="num" href="">3</a>
           <a class="num" href="">489</a>
           <a class="next" href="">&gt;&gt;</a>
+=======
+          </tr> -->
+        </tbody>
+      </table>
+      <div class="page" style="margin-left:500px;">
+        <div>
+          <a class="prev" href="" style="float:left">&lt;&lt;</a>
+           <div class="pagenum" style="float:left"></div>
+         <!--  <a class="num" href="">1</a>
+          <span class="current">2</span>
+          <a class="num" href="">3</a>
+          <a class="num" href="">489</a> -->
+          <a class="next" href="" style="float:left">&gt;&gt;</a>
+>>>>>>> xiuBranch
         </div>
       </div>
 
@@ -170,9 +204,37 @@
       /*用户-删除*/
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
+<<<<<<< HEAD
               //发异步删除数据
               $(obj).parents("tr").remove();
               layer.msg('已删除!',{icon:1,time:1000});
+=======
+              $id=$(obj).parents("tr").attr("data-id");
+              //发异步删除数据`
+              $(obj).parents("tr").remove();
+              layer.msg('已删除!',{icon:1,time:1000});
+
+
+                 //发送请求，删除数据库里面的书库
+              // 找到对应的id
+                let xhr=new XMLHttpRequest();
+              xhr.open("delete",`/orderlist/${$id}`,true);
+              xhr.send();
+              let status=[200,304];
+               xhr.onload=()=>{
+            if(status.includes(xhr.status)){
+               let res=JSON.parse(xhr.responseText);
+                    console.log(res);
+                    
+          };
+      }
+
+
+
+
+
+
+>>>>>>> xiuBranch
           });
       }
 
@@ -181,11 +243,53 @@
       function delAll (argument) {
 
         var data = tableCheck.getData();
+<<<<<<< HEAD
+=======
+
+
+         var achecks=document.querySelectorAll(".layui-form-checked");
+          var acheckarr=[];
+          console.log(achecks);
+
+          //循环所有的节点，如果有这么一个属性  就推进数组
+            for(var i=0;i<achecks.length;i++){
+            var str=achecks[i].parentNode.parentNode.getAttribute("data-id");
+              acheckarr.push(str);
+
+          }
+            console.log(acheckarr);
+
+>>>>>>> xiuBranch
   
         layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
             layer.msg('删除成功', {icon: 1});
             $(".layui-form-checked").not('.header').parents('tr').remove();
+<<<<<<< HEAD
+=======
+
+
+
+
+                for(let j=0;j<acheckarr.length;j++){
+
+              let xhr=new XMLHttpRequest();
+              xhr.open("delete",`/orderlist/${acheckarr[j]}`,true);
+              xhr.send();
+
+              let status=[200,304];
+               xhr.onload=()=>{
+
+            if(status.includes(xhr.status)){
+
+               let res=JSON.parse(xhr.responseText);
+                    console.log(res);
+                    
+          };
+      }
+
+            }
+>>>>>>> xiuBranch
         });
       }
     </script>

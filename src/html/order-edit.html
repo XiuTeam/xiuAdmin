@@ -23,29 +23,13 @@
   <body>
     <div class="x-body">
         <form class="layui-form">
-<<<<<<< HEAD
-          <div class="layui-form-item">
-              <label for="username" class="layui-form-label">
-                  <span class="x-red">*</span>用户名
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="username" name="username" required="" lay-verify="required"
-                  autocomplete="off" class="layui-input">
-              </div>
-          </div>
-=======
          
->>>>>>> xiuBranch
           <div class="layui-form-item">
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>收货人
               </label>
               <div class="layui-input-inline">
-<<<<<<< HEAD
-                  <input type="text" id="username" name="username" required="" lay-verify="required"
-=======
                   <input type="text" id="username" name="username" required="" lay-verify=""
->>>>>>> xiuBranch
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -63,19 +47,11 @@
                   <span class="x-red">*</span>收货地址
               </label>
               <div class="layui-input-inline">
-<<<<<<< HEAD
-                  <input type="text" id="username" name="username" required="" lay-verify="required"
-                  autocomplete="off" class="layui-input">
-              </div>
-          </div>
-          <div class="layui-form-item">
-=======
                   <input type="text" id="address" name="username" required="" lay-verify=""
                   autocomplete="off" class="layui-input">
               </div>
           </div>
          <!--  <div class="layui-form-item">
->>>>>>> xiuBranch
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>配送物流
               </label>
@@ -98,13 +74,8 @@
                     <option>货到付款</option>
                   </select>
               </div>
-<<<<<<< HEAD
-          </div>
-          <div class="layui-form-item">
-=======
           </div> -->
          <!--  <div class="layui-form-item">
->>>>>>> xiuBranch
               <label for="L_email" class="layui-form-label">
                   <span class="x-red">*</span>发票抬头
               </label>
@@ -115,10 +86,6 @@
               <div class="layui-form-mid layui-word-aux">
                   <span class="x-red">*</span>
               </div>
-<<<<<<< HEAD
-          </div>
-          <div class="layui-form-item layui-form-text">
-=======
           </div> -->
 
            <div class="layui-form-item">
@@ -188,7 +155,6 @@
               </div>
           </div>
           <!-- <div class="layui-form-item layui-form-text">
->>>>>>> xiuBranch
               <label for="desc" class="layui-form-label">
                   商品增加
               </label>
@@ -220,11 +186,7 @@
               <div class="layui-input-block">
                   <textarea placeholder="请输入内容" id="desc" name="desc" class="layui-textarea"></textarea>
               </div>
-<<<<<<< HEAD
-          </div>
-=======
           </div> -->
->>>>>>> xiuBranch
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
@@ -235,11 +197,170 @@
       </form>
     </div>
     <script>
-        layui.use(['form','layer'], function(){
-            $ = layui.jquery;
-          var form = layui.form
-          ,layer = layui.layer;
-        
+
+
+
+
+//封装cookie函数：一个对象多重功能
+//存: Cookie.set()
+//取: Cookie.get()
+//删: Cookie.remove()
+
+var Cookie = {
+  //设置cookie，存数据到cookie里面
+  set: function(name, value, prop) {
+    var str = name + '=' + value;
+    //json(prop)存后面一些可选参数
+    //expires:设置失效时间
+    if(prop.expires) {
+      str += ';expires=' + prop.expires.toUTCString(); //把时间转成字符串
+    }
+    //设置path路径
+    if(prop.path) {
+      str += ';path=' + prop.path;
+    }
+    //domain设置可访问cookie的域名
+    if(prop.domain) {
+      str += ';domain=' + prop.domain;
+    }
+    document.cookie = str;
+  },
+
+  //获取cookie数据
+  get: function(key) {
+    var cookies = document.cookie;
+    // name=tiantian; age=18; usn=yuanyuan; pws=456123
+
+    var arr = cookies.split('; ');
+    //['name=tiantian','age=18','usn=yuanyuan','pws=456123']
+    for(var i = 0; i < arr.length; i++) {
+      var arr2 = arr[i].split('=');
+      //['name','tiantian']
+      if(key == arr2[0]) {
+        return arr2[1];
+      }
+    }
+  },
+
+  //删除
+  remove: function(key) {
+    //删的原理:设置过期时间
+    var now = new Date();
+    now.setDate(now.getDate() - 1);
+    //重新设置时间
+    this.set(key, 'no', {
+      expires: now
+    });
+  }
+}
+
+
+
+
+
+
+
+ var renderdata = '';
+    if (Cookie.get('data')){
+        renderdata = Cookie.get('data');
+        renderdata = JSON.parse(renderdata);
+        console.log(renderdata);
+
+        $("#number").val(renderdata.number);
+        $("#username").val(renderdata.person);
+        $("#phone").val(renderdata.phone);                 
+        $("#address").val(renderdata.address);
+        $("#price").val(renderdata.price);
+        $("#goodstotal").val(renderdata.itemSum);
+        $("#pay").val(renderdata.pay);
+        $("#total").val(renderdata.total);
+
+
+        // var isok1 = true;
+        // $('#L_email').blur(() => {
+        //     var val = $('#L_email').val();
+        //     var strs = checkReg.trim(val);
+        //     console.log(strs);
+
+        //     if (strs) {
+        //         $.ajax({
+        //             type: 'get',
+        //             url: '/addAdmin/checkname',
+        //             async: true,
+        //             data: {
+        //                 'email': strs
+        //             },
+        //             success: (str) => {
+        //                 if (str.code == '1') {
+        //                     if (renderdata.email == str.data.username) {
+        //                       console.log(1);
+        //                         isok1 = true;
+        //                     } else {
+        //                       console.log('same');
+        //                         $('#email').html('该登录名已存在');
+        //                         $('#email').css('color', 'red');
+        //                         isok1 = false;
+        //                     }
+
+        //                 } else {
+        //                     isok1 = true;
+        //                 }
+        //             }
+        //         });
+        //     } else {
+        //         $('#userInfor').html('登录名不符合规则');
+        //         $('#userInfor').css('color', 'red');
+        //         isok1 = false;
+        //     }
+        // });
+
+        // // var isok6 = true;
+        // var role = '';
+        // $('#role input').eq(0).prop('checked', 'checked');
+        // for (var i = 0; i < $('#role input').size(); i++) {
+        //     if ($('#role input').eq(i).data('names') == renderdata.role) {
+        //         $('#role input').eq(i).prop('checked', 'checked');
+        //         // var isok6 = true;
+        //     }
+        // }
+
+        // $('#role input').click(function() {
+        //     console.log($(this));
+        //     $(this).prop('checked', 'checked');
+        //     role = $(this).data('names');
+        // });
+
+        // layui.use(['form', 'layer'], function() {
+        //     $ = layui.jquery;
+        //     var form = layui.form,
+        //         layer = layui.layer;
+
+        //     form.verify({
+        //         username: [/^[a-zA-Z][\w\-]{2,19}$/, '登录名以字母开头，3-20位'],
+        //         pass: [/(.+){6,12}$/, '密码必须6到12位'],
+        //         repass: function(value) {
+        //             if ($('#L_pass').val() != $('#L_repass').val()) {
+        //                 return '两次密码不一致';
+        //             }
+        //         }
+        //     });
+
+         
+            };
+    //     });
+    // };
+
+
+
+
+
+
+
+    layui.use(['form','layer'], function(){
+      $ = layui.jquery;
+      var form = layui.form
+      ,layer = layui.layer;
+
           //自定义验证规则
           form.verify({
             nikename: function(value){
@@ -249,17 +370,17 @@
             }
             ,pass: [/(.+){6,12}$/, '密码必须6到12位']
             ,repass: function(value){
-                if($('#L_pass').val()!=$('#L_repass').val()){
-                    return '两次密码不一致';
-                }
+              if($('#L_pass').val()!=$('#L_repass').val()){
+                return '两次密码不一致';
+              }
             }
           });
+
+
 
           //监听提交
           form.on('submit(add)', function(data){
             console.log(data);
-<<<<<<< HEAD
-=======
 
 
             let obj=data.field;
@@ -267,52 +388,48 @@
             //发异步，把数据提交给php
             
             $.ajax({
-                type: 'post',
-                url: '/orderlist/addorderlist',
-                async: true,
-                data: {
+              type: 'post',
+              url: '/orderlist/addorderlist',
+              async: true,
+              data: {
 
-                  "number":$("#number").val(),
-                  'person': $("#username").val(),
-                  'phone': $("#phone").val(),                    
-                  'address':$("#address").val(),
-                  "price":$("#price").val(),
-                  "itemSum":$("#goodstotal").val(),
-                  "pay":$("#pay").val(),
-                  "total":$("#total").val(),
+                "number":$("#number").val(),
+                'person': $("#username").val(),
+                'phone': $("#phone").val(),                    
+                'address':$("#address").val(),
+                "price":$("#price").val(),
+                "itemSum":$("#goodstotal").val(),
+                "pay":$("#pay").val(),
+                "total":$("#total").val(),
 
-                },
+              },
+              success: function(str){
+                console.log(str);
+                 layer.alert("更新成功", {
+                                icon: 6
+                            }, function() {
+                                // 获得frame索引
+                                var index = parent.layer.getFrameIndex(window.name);
+                                //关闭当前frame
+                                parent.layer.close(index);
+                            });
 
 
-                success: function(str) {
-                    console.log(str);
-                    layer.alert("增加成功", {
-                icon: 6
-            }, function() {
-                // 获得frame索引
-                var index = parent.layer.getFrameIndex(window.name);
-                //关闭当前frame
-                parent.layer.close(index);
-            });
-        }
-            });
-            
-            
-            
-          
->>>>>>> xiuBranch
+                         }
+                    })
             //发异步，把数据提交给php
             layer.alert("增加成功", {icon: 6},function () {
                 // 获得frame索引
                 var index = parent.layer.getFrameIndex(window.name);
                 //关闭当前frame
                 parent.layer.close(index);
-            });
+              });
             return false;
-          });
-          
-          
+        
         });
+
+   
+});//最后的结尾
     </script>
     <script>var _hmt = _hmt || []; (function() {
         var hm = document.createElement("script");
