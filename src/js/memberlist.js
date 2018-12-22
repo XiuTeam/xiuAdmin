@@ -66,7 +66,7 @@
                  pagenum.innerHTML+=str;
 
                 }
-                 // page.children[0].className='active';
+                 pagenum.children[0].classList.add('current');
     
          }
     }    
@@ -80,7 +80,7 @@
 //点击不同的页码 发送不同页数
         var now=1;
         
-   pagenum.onclick=function(ev){
+   pagenum.onclick=function(){
     
 
     var str3="";
@@ -99,19 +99,23 @@
                     // console.log(res);
                     let arr=res.data;
                     
-                    var qty=6;
+                       var qty=6;
                    var listnum=(now-1)*qty;
                  
-                    num=listnum;
+               
                  for(var i=0;i<arr.length;i++){
-                 
-                 num++;
+             
                  str3+=render(arr[i]);
                    
-                 } tbody.innerHTML=str3;
+                 } 
+                 tbody.innerHTML=str3;
 
-                ev.preventDefault();
-                 // page.children[0].className='active';
+                // ev.preventDefault();
+                  //清空
+                    for(var i=0;i<pagenum.children.length;i++){
+                      pagenum.children[i].classList.remove("current");
+                    }
+                    pagenum.children[now-1].classList.add('current');
     
                  }
              }    
@@ -120,6 +124,86 @@
 
  }
 
+var prev=document.querySelector(".prev");
+var next=document.querySelector(".next");
+
+// 点击前一页
+prev.onclick=function(){
+          now--;
+          if(now<=1){
+            now=1;//最小第一页
+          }
+          var str3="";
+        let xhr=new XMLHttpRequest();
+            xhr.open("get",`/member?page=${now}&qty=6`,true);
+            xhr.send();
+              xhr.onload=()=>{
+                 if(status.includes(xhr.status)){
+                    let res=JSON.parse(xhr.responseText);
+                    // console.log(res);
+                    let arr=res.data;
+                    
+                    var qty=6;
+                   var listnum=(now-1)*qty;
+                 
+                 
+                 for(var i=0;i<arr.length;i++){
+         
+                 str3+=render(arr[i]);
+                   
+                 } 
+                 tbody.innerHTML=str3;
+                
+       
+                //清空
+                    for(var i=0;i<pagenum.children.length;i++){
+                      pagenum.children[i].classList.remove("current");
+                    }
+                    pagenum.children[now-1].classList.add('current');
+              };
+          }
+
+}
+
+// 点击前一页
+next.onclick=function(){
+  var rows=pagenum.children.length;
+  console.log(rows);
+         now++;
+            if(now>=rows){
+            now=rows;//最大就是最后一页
+          }
+          var str3="";
+        let xhr=new XMLHttpRequest();
+            xhr.open("get",`/member?page=${now}&qty=6`,true);
+            xhr.send();
+              xhr.onload=()=>{
+                 if(status.includes(xhr.status)){
+                    let res=JSON.parse(xhr.responseText);
+                    // console.log(res);
+                    let arr=res.data;
+                    
+                    var qty=6;
+                   var listnum=(now-1)*qty;
+                 
+                 
+                 for(var i=0;i<arr.length;i++){
+         
+                 str3+=render(arr[i]);
+                   
+                 } 
+                 tbody.innerHTML=str3;
+                
+       
+                //清空
+                    for(var i=0;i<pagenum.children.length;i++){
+                      pagenum.children[i].classList.remove("current");
+                    }
+                    pagenum.children[now-1].classList.add('current');
+              };
+          }
+
+}
 
 
 // var layui=document.querySelector(".layui-unselect");
@@ -167,7 +251,7 @@ console.log(ev.target.parentNode.className);
 }
 
 
-
+//查询
 var inputs=document.querySelector(".usercenter");
 var layuibtn=document.querySelector(".searchbtn");
 // console.log(layuibtn,inputs);

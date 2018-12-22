@@ -9,10 +9,13 @@ let Router = express.Router();
 Router.get('/check', (req, res) => {
 	let {
 		qty,
-		page
+		page,
+		rule,
+		rank
 	} = req.query;
+	console.log(req.query);
 	// 查询商品列表，渲染页面
-	MongoClient.connect('mongodb://127.0.0.1:27017', (error, database) => {
+	MongoClient.connect('mongodb://127.0.0.1:27017', async (error, database) => {
 		if(error) {
 			throw error;
 		}
@@ -21,15 +24,38 @@ Router.get('/check', (req, res) => {
 		let goodlist = db.collection('goodlist');
 		let data;
 		let total;
-//		let isok = false;
+		let ruleBy;
+		if(rule=='category'){
+			ruleBy={
+				category:rule
+			}
+		}else{
+			ruleBy={};
+		}
+		console.log(ruleBy);
 
-		goodlist.find().limit(36).toArray((error, result) => {
-			total = result.length;
-		});
+		// 利用async确保获取到总条数后才执行分页
+		function getTotal(){
+			return new Promise((resolve,reject)=>{
+				// total=goodlist.find().count();
+				goodlist.find().toArray((error, result) => {
+					if(error){
+						reject(total);
+                		return
+					}
+
+					total = result.length;
+					resolve(total);
+				});
+			})
+		}
+
+		total=await getTotal();
+		console.log('rule',rule);
 
 		
-		goodlist.find().sort({
-			time: -1
+		goodlist.find(ruleBy).sort({
+			'time': -1
 		}).limit(qty * 1).skip(page * 1).toArray((error, result) => {
 
 			if(result) {
@@ -47,9 +73,10 @@ Router.get('/check', (req, res) => {
 					msg: 'sorry'
 				}
 			}
-			
+			// console.log(data);
 			res.send(data);
 		});
+		database.close();
 	});
 
 });

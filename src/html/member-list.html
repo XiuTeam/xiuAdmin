@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="../css/xadmin.css">
 		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+         <script type="text/javascript" src="../js/x-layui.js"></script>
 		<script type="text/javascript" src="../js/xadmin.js"></script>
 		<script type="text/javascript" src="../js/memberlist.js"></script>
 	</head>
@@ -139,13 +140,13 @@
 			</table>
 			<div class="page" style="margin-left:500px">
 				<div>
-					<a class="prev" href="" style="float:left">&lt;&lt;</a>
+					<a class="prev"  style="float:left">&lt;&lt;</a>
 					<div class="pagenum" style="float:left"></div>
 					<!--  <a class="num " href="">1</a>
           <span class="current">2</span>
           <a class="num" href="">3</a>
           <a class="num" href="">489</a> -->
-					<a class="next" href="" style="float:left">&gt;&gt;</a>
+					<a class="next"  style="float:left">&gt;&gt;</a>
 
 				</div>
 			</div>
@@ -248,7 +249,9 @@
 					layer.msg('删除成功', {
 						icon: 1
 					});
+                    
 					$(".layui-form-checked").not('.header').parents('tr').remove();
+
 
 					for(let j = 0; j < acheckarr.length; j++) {
 

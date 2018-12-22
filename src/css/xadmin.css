@@ -205,6 +205,11 @@ xblock{
     min-width: 15px;
     border: 1px solid #009688;
 }
+
+.pagenum .current{
+  background: #009688;
+  color: #fff;
+}
 .page .pagination li{
     display: inline-block;
     margin-right: 5px;

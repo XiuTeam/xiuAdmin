@@ -62,18 +62,18 @@
 						<th style="width:100px;">ID</th>
 						<th>商品名称</th>
 						<th data-field="category" data-key="4-0-2" class=" layui-unselect">
-							<div class="layui-table-cell laytable-cell-4-0-2"><span>分类</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc rule_category1"></i><i class="layui-edge layui-table-sort-desc rule_category2"></i></span></div>
+							<div class="layui-table-cell laytable-cell-4-0-2"><span>分类</span><span class="layui-table-sort layui-inline" data-name="category"><i class="layui-edge layui-table-sort-asc rule_category1"></i><i class="layui-edge layui-table-sort-desc rule_category2"></i></span></div>
 						</th>
 						<!-- <th data-field="price" data-key="4-0-2" class=" layui-unselect"><div class="layui-table-cell laytable-cell-4-0-2"><span>原价</span><span class="layui-table-sort layui-inline" lay-sort="asc"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th> -->
 						<!-- <th>分类</th> -->
 						<th>原价</th>
 						<th data-field="price" data-key="4-0-2" class=" layui-unselect">
-							<div class="layui-table-cell laytable-cell-4-0-2"><span>现价</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div>
+							<div class="layui-table-cell laytable-cell-4-0-2"><span>现价</span><span class="layui-table-sort layui-inline" data-name="price"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div>
 						</th>
 						<!-- <th>现价</th> -->
 						<th>库存</th>
 						<th data-field="time" data-key="4-0-2" class=" layui-unselect">
-							<div class="layui-table-cell laytable-cell-4-0-2"><span>添加时间</span><span class="layui-table-sort layui-inline" lay-sort="asc"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div>
+							<div class="layui-table-cell laytable-cell-4-0-2"><span>添加时间</span><span class="layui-table-sort layui-inline" data-name="time"><i class="layui-edge layui-table-sort-asc activeup" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div>
 						</th>
 						<!-- <th>添加时间</th> -->
 						<th>状态</th>
@@ -108,7 +108,9 @@
                     <a class="num" href="">3</a>
                     <a class="num" href="">489</a> -->
 					</p>
-					<a class="next" id="next" href="javascript:;">&gt;&gt;</a>
+					<a class="next" id="next" href="javascript:;">&gt;&gt;</a>&nbsp;到第
+					<input type="text" id="skipNum"/>&nbsp;页
+					<a class="skip" id="skip" href="javascript:;">确定</a>
 				</div>
 			</div>
 		</div>

@@ -33,8 +33,8 @@
           </li>
         </ul>
         <ul class="layui-nav right" lay-filter="">
-          <li class="layui-nav-item">
-            <a href="javascript:;">admin</a>
+          <li class="layui-nav-item loginpage">
+            <a href="html/login.html" id="loginusername">admin</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
               <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
               <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
@@ -290,4 +290,88 @@
     </div>
    
 </body>
+<script type="text/javascript"> 
+
+
+//封装cookie函数：一个对象多重功能
+//存: Cookie.set()
+//取: Cookie.get()
+//删: Cookie.remove()
+
+var Cookie = {
+  //设置cookie，存数据到cookie里面
+  set: function(name, value, prop) {
+    var str = name + '=' + value;
+    //json(prop)存后面一些可选参数
+    //expires:设置失效时间
+    if(prop.expires) {
+      str += ';expires=' + prop.expires.toUTCString(); //把时间转成字符串
+    }
+    //设置path路径
+    if(prop.path) {
+      str += ';path=' + prop.path;
+    }
+    //domain设置可访问cookie的域名
+    if(prop.domain) {
+      str += ';domain=' + prop.domain;
+    }
+    document.cookie = str;
+  },
+
+  //获取cookie数据
+  get: function(key) {
+    var cookies = document.cookie;
+    // name=tiantian; age=18; usn=yuanyuan; pws=456123
+
+    var arr = cookies.split('; ');
+    //['name=tiantian','age=18','usn=yuanyuan','pws=456123']
+    for(var i = 0; i < arr.length; i++) {
+      var arr2 = arr[i].split('=');
+      //['name','tiantian']
+      if(key == arr2[0]) {
+        return arr2[1];
+      }
+    }
+  },
+
+  //删除
+  remove: function(key) {
+    //删的原理:设置过期时间
+    var now = new Date();
+    now.setDate(now.getDate() - 1);
+    //重新设置时间
+    this.set(key, 'no', {
+      expires: now
+    });
+  }
+}
+
+
+
+ //拿到cookie里面的用户名
+     
+         // console.log(  Cookie.get("username"));
+
+
+var loginusername=document.querySelector("#loginusername");
+// var registered=document.querySelector("#registered");
+var cookie= Cookie.get("username");
+
+console.log(loginusername)
+
+if(cookie){
+
+  loginusername.innerHTML=""+cookie;
+
+}else{
+ 
+  loginusername.innerHTML="登录" ;
+  
+}
+
+
+
+
+
+</script>
 </html>
