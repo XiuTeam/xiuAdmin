@@ -1,15 +1,8 @@
-/* 
-* @Author: Marte
-* @Date:   2018-12-21 20:31:17
-* @Last Modified by:   Marte
-* @Last Modified time: 2018-12-22 20:45:52
-*/
-// 发送请求，请求管理员数据，渲染管理员列表
+// 发送请求，请求商品数据，渲染管理员列表
 let qty = 6;
 let now = 1;
 let page = (now - 1) * 6;
 let total = 0;
-// let i = 1;
 let totalPage = 0;
 let rule = 'time';
 let rank = -1;
@@ -18,8 +11,7 @@ let item = "";
 // 发送ajax请求，渲染第一页
 $.ajax({
     type: 'get',
-    url: 'http://localhost:3008/good/check',
-    // url: '/good/check',
+    url: '/good/check',
     async: true,
     data: {
         'qty': qty,
@@ -30,7 +22,6 @@ $.ajax({
     success: function(str) {
         total = str.total;
         totalPage = Math.ceil(total / qty);
-        console.log(totalPage);
         arr = str.data;
         create(arr);
         updatePage(now);
@@ -71,13 +62,12 @@ function create(arr) {
     }).join('');
 
     $('#goodList').html(res);
-    // console.log($('.good_status'));
+    // 判断商品上架情况
     for (var i = 0; i < $('.good_status').length; i++) {
         if ($('.good_status').eq(i).prop('title') == '已上架') {
             $('.good_status').eq(i).find('i').html('&#xe601;');
             $('.good_status').eq(i).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('上架');
         } else {
-            // console.log($('.good_status').eq(i).parents("tr").find(".td-status").find('span'));
             $('.good_status').eq(i).find('i').html('&#xe62f;');
             $('.good_status').eq(i).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('下架');
         }
@@ -87,69 +77,57 @@ function create(arr) {
 
 // 更新页码状态
 function updatePage(now) {
-		item="";
-        if (totalPage <= 5) { //总页数小于五页，则加载所有页
-        	item="";
-            for (var i=1; i <= totalPage; i++) {
+    item = "";
+    if (totalPage <= 5) { //总页数小于五页，则加载所有页
+        item = "";
+        for (var i = 1; i <= totalPage; i++) {
+            item += `<a class="num" href="javascript:;">${i}</a>`;
+        };
+        $('#pagenum').html(item);
+    } else if (totalPage > 5) { //大于五页，显示省略号
+        if (now < 3) {
+            for (var i = 1; i <= 3; i++) {
                 item += `<a class="num" href="javascript:;">${i}</a>`;
-            };
-            $('#pagenum').html(item);
-        }else if(totalPage > 5){
-
-
-        	if(now<3){
-        		for(var i=1;i<=3;i++){
-	    			item += `<a class="num" href="javascript:;">${i}</a>`;
-	    		}
-	    		item += "<span style='margin-right:3px;'> . . . </span>";
-        	}
-
-    		else if(now>=3 && now<totalPage-3){
-    			for(var i=1;i<=4;i++){
-	    			item += `<a class="num" href="javascript:;">${i}</a>`;
-	    		}
-    			if(now>=4){
-    				item="";
-    				item+=`<a class="num" href="javascript:;">1</a><span style='margin-right:3px;'> . . . </span>`;
-
-    				for(var i=(now*1-1);i<=now*1+1;i++){
-    					console.log('当前的'+now+'当前的i'+i);
-    					item+=`<a class="num" href="javascript:;">${i}</a>`;
-    				}
-    			}
-    			item += "<span style='margin-right:3px;'> . . . </span>";
-    		}else {
-
-    				item="";
-    				item+=`<a class="num" href="javascript:;">1</a><span style='margin-right:3px;'> . . . </span>`;
-
-    				for(var i=(totalPage-3);i<=totalPage-1;i++){
-    					
-    					item+=`<a class="num" href="javascript:;">${i}</a>`;
-    				}
-    		}
-    		$('#pagenum').html(item+`<a class="num" href="javascript:;">${totalPage}</a>`);
-    	}
-
-
+            }
+            item += "<span style='margin-right:3px;'> . . . </span>";
+        } else if (now >= 3 && now < totalPage - 3) {
+            for (var i = 1; i <= 4; i++) {
+                item += `<a class="num" href="javascript:;">${i}</a>`;
+            }
+            if (now >= 4) {
+                item = "";
+                item += `<a class="num" href="javascript:;">1</a><span style='margin-right:3px;'> . . . </span>`;
+                for (var i = (now * 1 - 1); i <= now * 1 + 1; i++) {
+                    item += `<a class="num" href="javascript:;">${i}</a>`;
+                }
+            }
+            item += "<span style='margin-right:3px;'> . . . </span>";
+        } else {
+            item = "";
+            item += `<a class="num" href="javascript:;">1</a><span style='margin-right:3px;'> . . . </span>`;
+            for (var i = (totalPage - 3); i <= totalPage - 1; i++) {
+                item += `<a class="num" href="javascript:;">${i}</a>`;
+            }
+        }
+        $('#pagenum').html(item + `<a class="num" href="javascript:;">${totalPage}</a>`);
+    }
+    // 当前页高亮
     var pageBtn = $('#pagenum').find('a');
     pageBtn.removeClass('current');
     for (var i = 0; i < pageBtn.length; i++) {
         if (pageBtn.eq(i).text() * 1 == now) {
-            console.log('active'+now);
             pageBtn.eq(i).addClass('current');
         }
     }
-    // pageBtn.eq(now - 1).addClass('current');
+
     $('.totalPage').html(`共有数据：${total} 条`);
 }
 
 // 切换页码发送ajax请求
-function require(qty, page, rule, rank,now) {
+function require(qty, page, rule, rank, now) {
     $.ajax({
         type: 'get',
-        url: 'http://localhost:3008/good/check',
-        // url: '/good/check',
+        url: '/good/check',
         async: true,
         data: {
             'qty': qty,
@@ -158,13 +136,11 @@ function require(qty, page, rule, rank,now) {
             'rank': rank
         },
         success: function(str) {
-            // 总页数
             total = str.total;
             totalPage = Math.ceil(total / qty);
             arr = str.data;
             create(arr);
             updatePage(now);
-            console.log('send'+now);
         }
     });
 }
@@ -181,18 +157,16 @@ $('.layui-table .layui-edge').on('click', function() {
         rank = -1;
     }
     rule = $(this).parent().data('name');
-    require(qty, page, rule, rank,now);
+    require(qty, page, rule, rank, now);
 });
 
 // 点击上下页
 //点击页码 
 $('#pagenum').on('click', '.num', function() {
     now = $(this).text();
-    console.log('当前页'+now);
     page = (now - 1) * qty;
-    // console.log(page);
-    require(qty, page, rule, rank,now);
-    $('#skipNum').val();
+    require(qty, page, rule, rank, now);
+    $('#skipNum').val(now);
 });
 
 // 上下页
@@ -203,9 +177,8 @@ $('#prev').on('click', function() {
         now = 1;
         page = 0;
     }
-    console.log('page:' + page);
-    require(qty, page, rule, rank,now);
-    $('#skipNum').val();
+    require(qty, page, rule, rank, now);
+    $('#skipNum').val(now);
 });
 
 $('#next').on('click', function() {
@@ -215,22 +188,19 @@ $('#next').on('click', function() {
         now = totalPage;
         page = (totalPage - 1) * qty;
     }
-    require(qty, page, rule, rank,now);
+    require(qty, page, rule, rank, now);
     $('#skipNum').val(now);
 });
 
 // 点击跳转
-$('#skip').click(function(){
-	now=$.trim($('#skipNum').val());
-	page = (now - 1) * qty;
-    // console.log(page);
-    require(qty, page, rule, rank,now);
+$('#skip').click(function() {
+    now = $.trim($('#skipNum').val());
+    page = (now - 1) * qty;
+    require(qty, page, rule, rank, now);
 });
-
 
 // 点击编辑
 let datalist;
-
 $('#goodList').on('click', '.edit', function() {
     x_admin_show('编辑', 'good-edit.html');
 
@@ -246,8 +216,7 @@ $('#search').click((ev) => {
     if (goodid) {
         $.ajax({
             type: 'get',
-            url: 'http://localhost:3008/good/checkgood',
-            // url: '/addAdmin/checkname',
+            url: '/good/checkid',
             async: true,
             data: {
                 '_id': goodid
@@ -271,3 +240,126 @@ $('#search').click((ev) => {
         });
     }
 })
+
+/*商品商品上下架信息*/
+function member_stop(obj, id) {
+    var _id = $(obj).parent().parent().data('id');
+    var thisStatus = '';
+    if ($(obj).attr('title') == '已上架') {
+        thisStatus = '下架';
+    } else {
+        thisStatus = '上架';
+    }
+    layer.confirm('确定要' + thisStatus + '吗？', function(index) {
+
+        if ($(obj).attr('title') == '已上架') {
+
+            $.ajax({
+                type: 'get',
+                url: '/good/updateStatus',
+                async: true,
+                data: {
+                    '_id': _id,
+                    'status': '下架'
+                },
+                success: function(str) {
+                    console.log(str);
+                    $(obj).attr('title', '已下架')
+                    $(obj).find('i').html('&#xe62f;');
+
+                    $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('下架');
+                    layer.msg('已下架!', {
+                        icon: 5,
+                        time: 1000
+                    });
+                }
+            });
+
+        } else {
+            $.ajax({
+                type: 'get',
+                url: '/good/updateStatus',
+                async: true,
+                data: {
+                    '_id': _id,
+                    'status': '上架'
+                },
+                success: function(str) {
+                    $(obj).attr('title', '已上架')
+                    $(obj).find('i').html('&#xe601;');
+
+                    $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('上架');
+                    layer.msg('已上架!', {
+                        icon: 6,
+                        time: 1000
+                    });
+                }
+
+            });
+        }
+    });
+}
+
+// 删除商品
+function member_del(obj, id) {
+    layer.confirm('确定要删除吗？', function(index) {
+        //发异步删除数据
+        var _id = $(obj).parents("tr").find('.adminId').text();
+
+        $.ajax({
+            type: 'get',
+            url: '/good/delete',
+            async: true,
+            data: {
+                '_id': _id
+            },
+            success: (str) => {
+                console.log(str);
+            }
+        });
+
+        $(obj).parents("tr").remove();
+        layer.msg('已删除!', {
+            icon: 1,
+            time: 1000
+        });
+        window.location.reload();
+    });
+}
+
+// 判断复选框
+$('#goodList').on('click', '.good_pick', function() {
+    if (!$(this).hasClass('layui-form-checked')) {
+        $(this).addClass('layui-form-checked');
+    } else {
+        $(this).removeClass('layui-form-checked');
+    }
+
+})
+
+function delAll(argument) {
+
+    var data = tableCheck.getData();
+    layer.confirm('确定要删除吗？', function(index) {
+        for (var i = 0; i < data.length; i++) {
+            $.ajax({
+                type: 'get',
+                url: '/good/delete',
+                async: true,
+                data: {
+                    '_id': data[i]
+                },
+                success: (str) => {
+                    console.log(str);
+                }
+            });
+        }
+        //捉到所有被选中的，发异步进行删除
+        layer.msg('删除成功', {
+            icon: 1
+        });
+        window.location.reload();
+
+        $(".layui-form-checked").not('.header').parents('tr').remove();
+    });
+}

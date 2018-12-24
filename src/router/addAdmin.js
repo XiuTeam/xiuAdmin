@@ -6,13 +6,54 @@ const ObjectID = require('mongodb').ObjectID;
 
 let Router = express.Router();
 
+Router.get('/check',(req, res) => {
+	let {
+		qty,
+		page
+	} = req.query;
+	// 查询管理员列表，渲染页面
+	MongoClient.connect('mongodb://127.0.0.1:27017', (error, database) => {
+		if(error) {
+			throw error;
+		}
+
+		let db = database.db('xiu');
+		let admin = db.collection('admin');
+		let data;
+		let total;
+
+		admin.find().toArray((error, result) => {
+			total = result.length;
+		});
+
+		admin.find().sort({time:-1}).limit(qty * 1).skip(page * 1).toArray((error, result) => {
+
+			if(result) {
+				data = {
+					code: 1,
+					total: total,
+					data: result,
+					msg: 'ok'
+				}
+			} else {
+				data = {
+					code: 0,
+					total: 0,
+					data: error,
+					msg: 'sorry'
+				}
+			}
+			res.send(data);
+		});
+		database.close();
+	});
+})
+
 Router.get('/checkname', (req, res) => {
 	// 获取用户名
 	let {
 		username
 	} = req.query;
-	console.log(username);
-	// 连接数据库
 	MongoClient.connect('mongodb://127.0.0.1:27017', (error, database) => {
 		if(error) {
 			throw error;
@@ -39,8 +80,6 @@ Router.get('/checkname', (req, res) => {
 				})
 			}
 		});
-
-		// 关闭数据库，避免资源浪费
 		database.close();
 	});
 });
@@ -181,7 +220,6 @@ Router.post('/update', urlencodedParser, (req, res) => {
 	// 获取新注册用户信息
 	let {
 		username,
-		password,
 		role,
 		tel,
 		email,
@@ -202,7 +240,6 @@ Router.post('/update', urlencodedParser, (req, res) => {
 		}, {
 			$set: {
 				username: username,
-				password: password,
 				role: role,
 				email: email,
 				tel: tel
@@ -272,6 +309,38 @@ Router.get('/updateStatus', (req, res) => {
 
 		database.close();
 	});
+});
+
+// 更新管理员信息时验证密码
+Router.post('/checkinfor',urlencodedParser,(req,res)=>{
+    let {_id,password}=req.body;
+
+    MongoClient.connect('mongodb://127.0.0.1:27017',(error,database)=>{
+        if(error){
+            throw error;
+        }
+
+        let db=database.db('xiu');
+        let admin=db.collection('admin');
+
+        admin.findOne({_id:new ObjectID(_id),password},(error,result)=>{
+            if(result){
+                res.send({
+                    code:1,
+                    data:result,
+                    msg:'have'
+                })
+            }else{
+                res.send({
+                    code:0,
+                    data:[],
+                    msg:'sorry'
+                })
+            }
+        });
+
+        database.close();
+    });
 });
 
 module.exports = Router;

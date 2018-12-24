@@ -1,0 +1,10 @@
+{"_id":{"$oid":"5c14fdeda29f9449d37e7590"},"﻿id":3,"username":"Kate","password":"123456","role":"超级管理员","email":"123@qq.com","tel":"15280090088","time":"11/13/2018 19:45:45","status":"已启用"}
+{"_id":{"$oid":"5c15ee7069f0ba030067f85a"},"username":"jake","password":"123456","role":"编辑人员","time":{"$date":"2018-12-16T06:19:28.649Z"},"email":"123@123.com","tel":"17854282869","status":"已启用"}
+{"_id":{"$oid":"5c171a148ba9ed0f1c5debf9"},"username":"mary","password":"123456","role":"超级管理员","time":{"$date":"2018-12-17T03:37:56.099Z"},"email":"123@123.com","tel":"17854282869","status":"已启用"}
+{"_id":{"$oid":"5c175d47b5c02d23c8360704"},"username":"papi","password":"123456","role":"宣传人员","time":{"$date":"2018-12-17T08:24:39.371Z"},"email":"123@123.com","tel":"17854282869","status":"已启用"}
+{"_id":{"$oid":"5c179f36e4d6e40cf84f76e5"},"username":"Kates","password":"123456","role":"编辑人员","time":{"$date":"2018-12-17T13:05:58.106Z"},"email":"123@123.com","tel":"17854282869","status":"已启用"}
+{"_id":{"$oid":"5c17a56b22114b07a815e01c"},"username":"Tina","password":"123456","role":"超级管理员","time":{"$date":"2018-12-17T13:32:27.840Z"},"email":"123@123.com","tel":"17854272765","status":"已启用"}
+{"_id":{"$oid":"5c17cd5cccb1c51d34092429"},"username":"John","password":"123456","role":"宣传人员","time":{"$date":"2018-12-17T16:22:52.690Z"},"email":"123@123.com","tel":"15226538137","status":"已停用"}
+{"_id":{"$oid":"5c18e4edad5ba82844518471"},"username":"pipi","password":"123456","role":"编辑人员","time":{"$date":"2018-12-18T12:15:41.863Z"},"email":"123@123.com","tel":"17854282869","status":"已启用"}
+{"_id":{"$oid":"5c1b236dd7d82323e4d9f1b5"},"username":"test","password":"123456","role":"超级管理员","time":{"$date":"2018-12-20T05:06:53.018Z"},"email":"123@123.com","tel":"17854282869","status":"已启用"}
+{"_id":{"$oid":"5c20c588b414901444db63c4"},"username":"test2","password":"123456","role":"超级管理员","time":{"$date":"2018-12-24T11:39:52.217Z"},"email":"123456@qq.com","tel":"17865282879","status":"已启用"}

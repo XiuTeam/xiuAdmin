@@ -3,7 +3,6 @@ const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const bodyParser = require('body-parser');
 const ObjectID = require('mongodb').ObjectID;
-
 let Router = express.Router();
 
 Router.get('/check', (req, res) => {
@@ -32,13 +31,11 @@ Router.get('/check', (req, res) => {
 		}else{
 			ruleBy={};
 		}
-		console.log(ruleBy);
 
 		// 利用async确保获取到总条数后才执行分页
-		function getTotal(){
+		function getTotal(ruleBy){
 			return new Promise((resolve,reject)=>{
-				// total=goodlist.find().count();
-				goodlist.find().toArray((error, result) => {
+				goodlist.find(ruleBy).toArray((error, result) => {
 					if(error){
 						reject(total);
                 		return
@@ -50,14 +47,10 @@ Router.get('/check', (req, res) => {
 			})
 		}
 
-		total=await getTotal();
-		console.log('rule',rule);
-
-		
+		total=await getTotal(ruleBy);
 		goodlist.find(ruleBy).sort({
-			'time': -1
+			[rule]: rank*1
 		}).limit(qty * 1).skip(page * 1).toArray((error, result) => {
-
 			if(result) {
 				data = {
 					code: 1,
@@ -73,7 +66,6 @@ Router.get('/check', (req, res) => {
 					msg: 'sorry'
 				}
 			}
-			// console.log(data);
 			res.send(data);
 		});
 		database.close();
@@ -81,7 +73,7 @@ Router.get('/check', (req, res) => {
 
 });
 
-// 删除
+// 删除商品
 Router.get('/delete', (req, res) => {
 	// 获取id
 	let {
@@ -92,12 +84,8 @@ Router.get('/delete', (req, res) => {
 		if(error) {
 			throw error;
 		}
-		// 找到对应数据库
 		let db = database.db('xiu');
-		// 找到所需集合
 		let goodlist = db.collection('goodlist');
-		// _id='ObjectId("'+_id+'")';
-		// 查询数据库
 		goodlist.deleteOne({
 			_id: new ObjectID(_id)
 		}, (error, result) => {
@@ -195,8 +183,8 @@ Router.post('/addgood', urlencodedParser, (req, res) => {
 		// 插入新数据
 		goodlist.insert({
 			name: name,
-			price: price,
-			original: original,
+			price: price*1,
+			original: original*1,
 			time: new Date(),
 			category: category,
 			total: total,
@@ -224,13 +212,12 @@ Router.post('/addgood', urlencodedParser, (req, res) => {
 
 		database.close();
 	});
-	// res.send('success');
 });
 
 
-// 通过_id查询
+// 通过_id查询商品
 Router.get('/checkid', (req, res) => {
-	// 获取用户名
+	// 获取商品编号
 	let {
 		_id
 	} = req.query;
@@ -294,9 +281,9 @@ Router.post('/updategood', urlencodedParser, (req, res) => {
 
 		goodlist.findOne({_id:new ObjectID(_id)},(error, result) => {
 			oldImg=result.upImgUrl;
-			console.log(oldImg);
+			// console.log(oldImg);
 			upImgUrl=upImgUrl+oldImg
-			console.log(upImgUrl);
+			// console.log(upImgUrl);
 		});
 
 		goodlist.update({
@@ -304,9 +291,8 @@ Router.post('/updategood', urlencodedParser, (req, res) => {
 		}, {
 			$set: {
 				name: name,
-				price: price,
-				original: original,
-				// time: new Date(),
+				price: price*1,
+				original: original*1,
 				category: category,
 				total: total,
 				status: status,
@@ -334,47 +320,6 @@ Router.post('/updategood', urlencodedParser, (req, res) => {
 
 		database.close();
 	});
-	// res.send('success');
-});
-
-
-// 点击按类别查询商品
-Router.get('/checkgood', (req, res) => {
-    // 获取查询条件
-    let {
-        _id
-    } = req.query;
-    // 连接数据库
-    MongoClient.connect('mongodb://127.0.0.1:27017', (error, database) => {
-        if(error) {
-            throw error;
-        }
-        // 找到对应数据库
-        let db = database.db('xiu');
-        // 找到所需集合
-        let goodlist = db.collection('goodlist');
-        // 查询数据库
-        goodlist.findOne({
-            _id: new ObjectID(_id)
-        },(error, result) => {
-            if(result) {
-                res.send({
-                    code: 1,
-                    data: result,
-                    msg: 'have'
-                })
-            } else {
-                res.send({
-                    code: 0,
-                    data: [],
-                    msg: 'none'
-                })
-            }
-        });
-
-        // 关闭数据库，避免资源浪费
-        database.close();
-    });
 });
 
 module.exports = Router;

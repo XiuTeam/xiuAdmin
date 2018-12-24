@@ -33,7 +33,7 @@ Router.get('/',(req,res)=>{
                  
                  num=result.length;
          })
-        user.find().limit(qty).skip(page).toArray((err,result)=>{
+        user.find().limit(qty).skip((page-1)*qty).toArray((err,result)=>{
           // .toArray((err,result)=>{//不用也行 本意是想转为数组 但是会自己转为数组
             if(result){
                 res.send({
@@ -147,8 +147,11 @@ Router.post('/addmember',urlencodedParser,(req,res)=>{
     // 获取新注册用户信息
     let {
         username,
-        password,     
-        email
+        gender,
+        phone,
+        email,
+        address,
+        password
     } = req.body;
     // 连接数据库
     MongoClient.connect('mongodb://127.0.0.1:27017',(error,database) => {
@@ -162,11 +165,13 @@ Router.post('/addmember',urlencodedParser,(req,res)=>{
         // 插入新数据
         user.insert({
             username: username,
-            password: password,
-            
-            time: new Date(),
-            email: email,
-          
+             gender:gender,
+            tel:phone,
+            email:email,
+            address:address,
+            password:password,
+                
+            time: new Date()
         }, (error, result) => {
             let data;
             if(error) {
