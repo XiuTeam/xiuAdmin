@@ -196,5 +196,3 @@ function x_admin_show(title,url,w,h){
     var index = parent.layer.getFrameIndex(window.name);
     parent.layer.close(index);
  }
-
-

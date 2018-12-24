@@ -1,0 +1,97 @@
+#goodname {
+  width: 450px;
+}
+
+.original {
+  width: auto;
+}
+
+.layui-form-radio {
+  margin: 0;
+  padding-right: 0;
+}
+
+.image {
+  float: left;
+  margin-right: 50px;
+}
+.image img {
+  width: 100px;
+}
+.image label {
+  margin: 5px 0 0 0;
+  display: block;
+  font-size: 13px;
+  color: #333333;
+}
+.image label .layui-anim {
+  width: 20px;
+  height: 28px;
+  font-size: 16px;
+}
+
+.layui-form-radio > i {
+  margin-right: 0;
+}
+
+#activity {
+  margin-top: 10px;
+}
+
+.layui-form-switch {
+  margin-top: 6px;
+}
+
+.page {
+  color: #888888;
+}
+.page input {
+  width: 37px;
+  height: 38px;
+  border: 1px solid #e2e2e2;
+  text-align: center;
+  color: #888888;
+}
+.page #pagenum {
+  display: inline-block;
+}
+.page #pagenum a {
+  margin-right: 3px;
+}
+.page #pagenum .current {
+  background: #009688;
+  color: #fff;
+}
+
+#upImg > div {
+  margin-bottom: 10px;
+}
+
+#imgBox blockquote {
+  margin: 18px 0 0 38px;
+}
+#imgBox blockquote img {
+  width: 150px;
+  height: 150px;
+  margin-right: 15px;
+}
+
+#activity .layui-input-block {
+  line-height: 36px;
+}
+#activity .layui-input-block label {
+  margin-right: 5px;
+}
+#activity .layui-input-block label i {
+  margin-right: 3px;
+}
+
+.layui-table-cell .activeup {
+  border-bottom-color: #000;
+}
+
+.layui-table-cell .activedown {
+  border-top-color: #000;
+}
+
+/*# sourceMappingURL=good.css.map */

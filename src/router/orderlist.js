@@ -33,7 +33,8 @@ Router.get('/',(req,res)=>{
                  
                  num=result.length;
          })
-        user.find().limit(qty).skip(page).toArray((err,result)=>{
+
+        user.find().limit(qty).skip((page-1)*qty).toArray((err,result)=>{
           // .toArray((err,result)=>{//不用也行 本意是想转为数组 但是会自己转为数组
             if(result){
                 res.send({
@@ -62,7 +63,7 @@ Router.route('/:id')
             let id=req.params.id;
             // console.log(id);
 
-      MongoClient.connect('mongodb://localhost:27017',(err, database)=>{
+      MongoClient.connect('mongodb://localhost:27017',(err,database)=>{
         //连接成功后执行这个回调函数
         if(err) throw err;
 
@@ -73,13 +74,13 @@ Router.route('/:id')
         let user = db.collection('order');
         user.deleteOne({"_id":new ObjectID(id)},(err,result)=>{
 
-
+            console.log(result);
         // db.getCollection('user').remove({"_id" : ObjectId("5c1390c2cc4ee8a86ce3a3bd")})
             if(result){
                 res.send({
                     code:1,
                     ID:id,
-                    msg:"删除成功"
+                    msg:"删除成功hahahh@@"
                 })
             }else{
                 res.send({
@@ -142,7 +143,7 @@ Router.route('/:id')
 
 
 
-
+ 
 Router.post('/addorderlist',urlencodedParser,(req,res)=>{
     // 获取新注册用户信息
     let {
@@ -170,7 +171,7 @@ Router.post('/addorderlist',urlencodedParser,(req,res)=>{
 
            person:person,
            phone: phone ,            
-           address: address ,
+           address: address,
            number:number,
            price: price,
            itemSum:itemSum,
@@ -188,7 +189,7 @@ Router.post('/addorderlist',urlencodedParser,(req,res)=>{
             } else {
                 data = {
                     code: 1,
-                    data: result.ops,
+                    data: result,
                     msg: 'success'
                 }
             }
@@ -251,12 +252,17 @@ Router.get('/checkid', (req, res) => {
 Router.post('/update', urlencodedParser, (req, res) => {
     // 获取新注册用户信息
     let {
-        username,
-        password,
-    
-        email,
-        _id
+        _id,
+        number,
+        person,
+        phone,
+        address,
+        price,
+        itemSum,
+        pay,
+        total
     } = req.body;
+    console.log(_id);
     // 连接数据库
     MongoClient.connect('mongodb://127.0.0.1:27017', (error, database) => {
         if(error) {
@@ -264,41 +270,45 @@ Router.post('/update', urlencodedParser, (req, res) => {
         }
         // 打开数据库，找到集合
         let db = database.db('xiu');
-        let admin = db.collection('user');
+        let admin = db.collection('order');
 
         // 插入新数据
         admin.update({
             _id: new ObjectID(_id)
         }, {
             $set: {
-                username: username,
-                password: password,
-             
-                email: email,
-               
+                    number:number,
+                    person:person,
+                    phone:phone,
+                    address:address,
+                    price:price,
+                    itemSum:itemSum,
+                    pay:pay,
+                    total:total
             }
-        }, (error, result) => {
+        }, (error,result) =>{
             let data;
             if(error) {
                 data = {
                     code: 0,
                     data: [],
-                    msg: error
+                    msg: error,
                 }
             } else {
                 data = {
                     code: 1,
                     data: result,
-                    msg: 'success'
+                    msg: 'success',
+                    ID:_id
                 }
             }
             res.send(data);
-        });
+         });
 
         database.close();
     });
 });
-
+ 
 
 
 
