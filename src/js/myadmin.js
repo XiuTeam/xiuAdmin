@@ -372,7 +372,7 @@ function delAll(argument) {
     var delEle = $('#adminList .layui-form-checked');
     var _id = [];
 
-    for (var i = 0; i < delEle.size(); i++) {
+    for (var i = 0; i < delEle.length; i++) {
         _id.push(delEle.eq(i).parent().parent().data('id'));
     }
 
